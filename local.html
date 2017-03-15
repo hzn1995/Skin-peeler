@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>网页换肤</title>
+    <style>
+        div{
+            width: 500px;
+            height: 300px;
+            border: 1px solid black;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        ul:after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+        li{
+            float: left;
+            width: 100px;
+            height: 50px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="face"></div>
+<ul>
+    <li class="color" style="background-color: red"></li>
+    <li class="color" style="background-color: green"></li>
+    <li class="color" style="background-color: blue"></li>
+    <li class="color" style="background-color: cyan"></li>
+    <li id="clear">清除</li>
+</ul>
+<h4>
+    cookies:存储大小：4KB；过期时间：人为设置；兼容性：基本上没有不兼容；
+</h4>
+<h4>
+    localstorge:存储大小：5MB；过期时间：永久；兼容性：IE8+
+</h4>
+<h4>
+    sessionstorage：存储大小：5MB；过期时间：网页窗口关闭即过期；兼容性：IE8+
+</h4>
+<script>
+    window.onload=function(){
+        /*本地存储：localstorage||sessionstorage*/
+        /*localStorage.setItem(k,v):存储信息*/
+        /*localStorage.getItem(k):取出存储信息*/
+        var div=document.getElementById("face");
+        var color=document.getElementsByClassName("color");
+        var clear=document.getElementById('clear');
+        getlocal('data');
+        for(var i=0;i<color.length;i++){
+            color[i].onclick=function(){
+                var cbl=this.style.backgroundColor;
+                local('data',cbl);
+                getlocal('data');
+               // console.log(getlocal('data'));
+               // div.style.backgroundColor=this.style.backgroundColor;
+            }
+        }
+        /*设置本地存储*/
+        function local(k,v){
+            window.localStorage.setItem(k,v);
+           // window.sessionStorage.setItem(k,v);
+        }
+        /*取出本地存储*/
+        function getlocal(a){
+            div.style.backgroundColor=window.localStorage.getItem(a);
+            //div.style.backgroundColor=window.sessionStorage.getItem(a);
+         //return  window.localStorage.getItem(a);
+          //  window.localStorage.getItem(a);
+
+        }
+        //clear清除缓存
+        clear.onclick=function(){
+            //window.localStorage.clear();
+            deletelocal('data');
+        }
+        function deletelocal(b){
+            window.localStorage.removeItem(b);
+        }
+    }
+</script>
+</body>
+</html>
